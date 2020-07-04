@@ -99,6 +99,7 @@ function __fish_prepend_sudo -d "Prepend 'sudo ' to the beginning of the current
     end
 end
 
+
 function open
   switch (file -b --mime-type $argv[1])
     case 'application/pdf'
@@ -113,6 +114,14 @@ function open
       xdg-open $argv[1]
   end
 end
+
+
+function man  -w man -d "man with kak as the pager"
+  command man $argv[1] | col -b -x | kak -e "set buffer filetype man;\
+                                             remove-hooks window man-hooks;\
+                                             map buffer normal q :q<ret>"
+end
+
 
 # ----------------------- bindings -----------------------
 bind \ep projects
