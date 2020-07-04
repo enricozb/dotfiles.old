@@ -67,6 +67,7 @@ function config --description "access configs"
   end
 end
 
+
 function projects --description "cd into a project with fzf"
   set -l proj (find ~/wiki/activities/projects -type d -not -path '*/\.*' | fzf)
   if [ -n "$proj" ]
@@ -129,7 +130,8 @@ bind \ew wiki-open
 bind \cw forward-word
 bind \cb backward-kill-word
 bind \cs __fish_prepend_sudo
-bind \eo '__fzf_open'
+bind \eo __fzf_open
+
 
 # ------------------------ source ------------------------
 source "$HOME/.opam/opam-init/init.fish" > /dev/null 2> /dev/null or true
