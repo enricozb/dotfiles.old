@@ -46,14 +46,10 @@ end
 
 
 function wiki-open --description "wiki filenames fzf"
-  set -l ext
-  if count $argv > /dev/null
-    set ext "*.$argv"
-  else
-    set ext '*.md'
-  end
-
-  set -l file (find -L ~/wiki -iname $ext | fzf)
+  set -l file (find -L ~/wiki \
+               ! -path "*/node_modules/*" \
+               ! -path "*/_target/*" \
+               -iname "*.md" | fzf)
   if [ -n "$file" ]
     kak $file
   end
@@ -103,11 +99,20 @@ function __fish_prepend_sudo -d "Prepend 'sudo ' to the beginning of the current
     end
 end
 
-
-function play --description "mpv without blocking and output"
-  mpv --really-quiet $argv & disown
+function open
+  switch (file -b --mime-type $argv[1])
+    case 'application/pdf'
+      zathura $argv[1] & disown
+    case 'text/*' 'inode/x-empty'
+      kak $argv[1]
+    case 'video/*'
+      mpv --really-quiet $argv[1] & disown
+    case 'inode/directory'
+      cd $argv[1]
+    case '*'
+      xdg-open $argv[1]
+  end
 end
-
 
 # ----------------------- bindings -----------------------
 bind \ep projects
@@ -115,6 +120,7 @@ bind \ew wiki-open
 bind \cw forward-word
 bind \cb backward-kill-word
 bind \cs __fish_prepend_sudo
+bind \eo '__fzf_open'
 
 # ------------------------ source ------------------------
 source "$HOME/.opam/opam-init/init.fish" > /dev/null 2> /dev/null or true
