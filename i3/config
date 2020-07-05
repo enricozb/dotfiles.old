@@ -13,7 +13,8 @@
   bindsym $mod+Shift+r reload
 
 # lock screen
-  bindsym Mod4+l exec swaylock -C ~/.config/swaylock/config
+  # bindsym Mod4+l exec swaylock -C ~/.config/swaylock/config
+  bindsym Mod4+l exec --no-startup-id "~/.config/i3/lock.sh"
 
 # exit
   bindsym $mod+Shift+e exit
