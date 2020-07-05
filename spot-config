@@ -2,3 +2,4 @@
 /home/enricozb/.config/alacritty/ -> alacritty
 /home/enricozb/.tmux.conf -> tmux/.tmux.conf
 /home/enricozb/.config/fish/config.fish -> fish/config.fish
+/home/enricozb/.config/i3/config -> i3/config
