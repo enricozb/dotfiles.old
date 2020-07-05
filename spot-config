@@ -5,3 +5,4 @@
 /home/enricozb/.config/picom/config -> picom/config
 /home/enricozb/.config/swaylock/ -> swaylock
 /home/enricozb/.config/i3/ -> i3
+/home/enricozb/.xinitrc -> xinit/.xinitrc
