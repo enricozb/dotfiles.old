@@ -56,6 +56,7 @@ shadow-exclude = [
     "name *= 'picom'",
     "name *= 'Chromium'",
     "name *= 'Chrome'",
+    "class_g = 'i3bar'",
     "class_g = 'Firefox' && argb",
     "class_g = 'Conky'",
     "class_g = 'Kupfer'",
@@ -197,6 +198,6 @@ wintypes:
 # Use X Sync fence to sync clients' draw calls. Needed on nvidia-drivers with GLX backend for some users.
 xrender-sync-fence = true;
 
-opacity-rule = [
-  "80:window_type = 'dock' && class_g = 'i3bar'"
-];
+# opacity-rule = [
+#   "80:window_type = 'dock' && class_g = 'i3bar'"
+# ];

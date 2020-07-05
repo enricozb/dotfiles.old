@@ -16,7 +16,8 @@
   bindsym Mod4+l exec swaylock -C ~/.config/swaylock/config
 
 # exit
-  bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
+  bindsym $mod+Shift+e exit
+  # bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
 
 # ----- the rest -----
 # include ~/.config/sway/config.d/*
@@ -132,9 +133,10 @@ bar {
   height 22
 
   colors {
-    statusline #ffffffff
+    statusline #ffffff
     background #252525bb
-    focused_workspace #727763 #727763 #ffffff
+    separator #ff0000
+    focused_workspace #ffffff00 #ffffff00 #ffffff
     inactive_workspace #252525bb #252525bb #ffffff
   }
 }

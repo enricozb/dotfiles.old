@@ -64,8 +64,10 @@ end
 
 function config --description "access configs"
   switch $argv
+    case i3
+      open "$HOME/.config/i3/config"
     case fish
-      kak "$HOME/.config/fish/config.fish"
+      open "$HOME/.config/fish/config.fish"
     case kak sway
       cd "$HOME/.config/$argv"
     case ""
