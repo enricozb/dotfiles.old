@@ -36,20 +36,26 @@ end
 function wikifind --description "find wiki files with content"
   switch "$argv"
   case '-w *'
-    find ~/wiki -iname '*.md' |\
-      xargs -d '\n' grep --color -ine \
-        (echo -n "$argv" | sed -n "s/-w\s*//p")
+    find -L ~/wiki \
+      ! -path "*/node_modules/*" \
+      ! -path "*/_target/*" \
+      -iname "*.md" \
+    | xargs -d '\n' grep --color -ine (echo -n "$argv" | sed -n "s/-w\s*//p")
   case '*'
-    find ~/wiki -iname '*.md' | xargs -d '\n' grep --color -wine $argv
+    find -L ~/wiki \
+      ! -path "*/node_modules/*" \
+      ! -path "*/_target/*" \
+      -iname "*.md" \
+    | xargs -d '\n' grep --color -wine $argv
   end
 end
 
 
 function wiki-open --description "wiki filenames fzf"
-  set -l file (find -L ~/wiki \
+  set -l file ~/wiki/(find -L ~/wiki \
                ! -path "*/node_modules/*" \
                ! -path "*/_target/*" \
-               -iname "*.md" | fzf)
+               -iname "*.md" -printf "%P\n" | fzf)
   if [ -n "$file" ]
     kak $file
   end
@@ -58,12 +64,20 @@ end
 
 function config --description "access configs"
   switch $argv
-  case fish
-    kak "$HOME/.config/fish/config.fish"
-  case kak
-    cd "$HOME/.config/kak"
-  case sway
-    cd "$HOME/.config/sway"
+    case fish
+      kak "$HOME/.config/fish/config.fish"
+    case kak sway
+      cd "$HOME/.config/$argv"
+    case ""
+      set -l file ~/.config/(find -L ~/.config \
+                   ! -path "*/lazygit/*/*" \
+                   ! -path "*/BraveSoftware/*" \
+                   -printf '%P\n' | fzf)
+      if [ -n "$file" ]
+        open $file
+      end
+    case "*"
+      echo "Unknown arg '$argv'"
   end
 end
 
@@ -104,15 +118,15 @@ end
 function open
   switch (file -b --mime-type $argv[1])
     case 'application/pdf'
-      zathura $argv[1] & disown
+      zathura $argv & disown
     case 'text/*' 'inode/x-empty'
-      kak $argv[1]
+      kak $argv
     case 'video/*'
-      mpv --really-quiet $argv[1] & disown
+      mpv --really-quiet $argv & disown
     case 'inode/directory'
-      cd $argv[1]
+      cd $argv
     case '*'
-      xdg-open $argv[1]
+      xdg-open $argv
   end
 end
 
@@ -131,6 +145,7 @@ bind \cw forward-word
 bind \cb backward-kill-word
 bind \cs __fish_prepend_sudo
 bind \eo __fzf_open
+bind \eC config
 
 
 # ------------------------ source ------------------------

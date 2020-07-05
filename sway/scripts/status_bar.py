@@ -47,7 +47,7 @@ def print_status(disregard_signal=True):
         playerctl = playerctl_status
 
     if not signal_raised or disregard_signal:
-        print(f"{playerctl} · {volume} · {date}", flush=True)
+        print(f"{playerctl} · {volume} · {date} ", flush=True)
 
     signal_raised = False
 
