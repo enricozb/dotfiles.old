@@ -121,7 +121,7 @@ function open
   switch (file -b --mime-type $argv[1])
     case 'application/pdf'
       zathura $argv & disown
-    case 'text/*' 'inode/x-empty'
+    case 'text/*' 'inode/x-empty' 'application/octet-stream'
       kak $argv
     case 'video/*'
       mpv --really-quiet $argv & disown
@@ -134,9 +134,7 @@ end
 
 
 function man  -w man -d "man with kak as the pager"
-  command man $argv[1] | col -b -x | kak -e "set buffer filetype man;\
-                                             remove-hooks window man-hooks;\
-                                             map buffer normal q :q<ret>"
+  command man $argv[1] | col -b -x | kak -e "set buffer filetype man"
 end
 
 
