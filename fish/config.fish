@@ -59,6 +59,7 @@ function wiki-open --description "wiki filenames fzf"
   if [ -n "$file" ]
     kak $file
   end
+  commandline -f repaint
 end
 
 
