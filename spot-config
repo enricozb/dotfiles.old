@@ -6,3 +6,4 @@
 /home/enricozb/.config/swaylock/ -> swaylock
 /home/enricozb/.config/i3/ -> i3
 /home/enricozb/.xinitrc -> xinit/.xinitrc
+/home/enricozb/.config/rofi/ -> rofi
