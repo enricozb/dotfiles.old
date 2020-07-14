@@ -1,0 +1,9 @@
+sway ; /home/enricozb/.config/sway/
+alacritty ; /home/enricozb/.config/alacritty/
+tmux/.tmux.conf ; /home/enricozb/.tmux.conf
+fish/config.fish ; /home/enricozb/.config/fish/config.fish
+picom/config ; /home/enricozb/.config/picom/config
+swaylock ; /home/enricozb/.config/swaylock/
+i3 ; /home/enricozb/.config/i3/
+xinit/.xinitrc ; /home/enricozb/.xinitrc
+rofi ; /home/enricozb/.config/rofi/
