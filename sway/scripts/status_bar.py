@@ -7,7 +7,10 @@ from subprocess import check_output, CalledProcessError
 
 
 def cmd(cmd, shell=False):
-    return check_output(cmd, shell=shell, encoding="utf-8").strip()
+    try:
+        return check_output(cmd, shell=shell, encoding="utf-8").strip()
+    except:
+        return None
 
 
 signal_raised = False
@@ -26,13 +29,17 @@ def print_status(disregard_signal=True):
 
     date = cmd(["date", "+%A  %Y-%m-%d %l:%M:%S %p"])
 
-    vol_amt = cmd(
-        f"amixer -c {card_idx} get Master | " r"grep -Po '\d?\d?\d%'", shell=True
-    )
-    vol_on = cmd(
-        f"amixer -c {card_idx} get Master | " r"grep -Po '\[(off|on)\]'", shell=True
-    )
-    volume = f"vol {vol_amt}" if vol_on == "[on]" else "mute"
+    if not card_idx:
+        volume = "mute"
+    else:
+        print("card_idx=", card_idx)
+        vol_amt = cmd(
+            f"amixer -c {card_idx} get Master | " r"grep -Po '\d?\d?\d%'", shell=True
+        )
+        vol_on = cmd(
+            f"amixer -c {card_idx} get Master | " r"grep -Po '\[(off|on)\]'", shell=True
+        )
+        volume = f"vol {vol_amt}" if vol_on == "[on]" else "mute"
 
     try:
         playerctl_status = cmd(["playerctl", "status"])
