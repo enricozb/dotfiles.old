@@ -127,7 +127,7 @@ bar {
 
   i3bar_command i3bar -t
   position top
-  font pango:Terminus Medium
+  font pango:Terminus (TTF)
 
   strip_workspace_numbers true
 

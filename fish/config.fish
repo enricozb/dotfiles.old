@@ -1,4 +1,5 @@
 # ---------------------- environment ---------------------
+set fish_greeting                       # no greeting
 set SHELL /usr/bin/fish
 set -x VISUAL kak                       # editors
 set -x EDITOR kak

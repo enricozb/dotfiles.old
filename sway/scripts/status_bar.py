@@ -20,27 +20,24 @@ def handle_usr_signal(signum, frame):
     signal_raised = True
     print_status(disregard_signal=False)
 
-
-def print_status(disregard_signal=True):
-    global signal_raised
+def volume():
     card_idx = cmd(
         r"cat /proc/asound/cards | grep -E '\[PCH\s+\]' | awk '{print $1}'", shell=True
     )
 
-    date = cmd(["date", "+%A  %Y-%m-%d %l:%M:%S %p"])
-
     if not card_idx:
-        volume = "mute"
+        return "mute"
     else:
-        print("card_idx=", card_idx)
         vol_amt = cmd(
             f"amixer -c {card_idx} get Master | " r"grep -Po '\d?\d?\d%'", shell=True
         )
         vol_on = cmd(
             f"amixer -c {card_idx} get Master | " r"grep -Po '\[(off|on)\]'", shell=True
         )
-        volume = f"vol {vol_amt}" if vol_on == "[on]" else "mute"
+        return f"vol {vol_amt}" if vol_on == "[on]" else "mute"
 
+
+def playerctl():
     try:
         playerctl_status = cmd(["playerctl", "status"])
     except CalledProcessError:
@@ -49,12 +46,27 @@ def print_status(disregard_signal=True):
     if playerctl_status == "Playing":
         artist = cmd(["playerctl", "metadata", "artist"])
         title = cmd(["playerctl", "metadata", "title"])
-        playerctl = f"[{artist}]: {title}"
-    else:
-        playerctl = playerctl_status
+        return f"[{artist}]: {title}"
 
+    return playerctl_status
+
+
+def date():
+    return cmd(["date", "+%A  %Y-%m-%d %l:%M:%S %p"])
+
+
+def battery():
+    now = cmd(["cat", "/sys/class/power_supply/BAT0/charge_now"])
+    full = cmd(["cat", "/sys/class/power_supply/BAT0/charge_full"])
+    return f"{100 * int(now) / int(full):0.1f}%"
+
+
+def print_status(disregard_signal=True):
+    global signal_raised
     if not signal_raised or disregard_signal:
-        print(f"{playerctl} · {volume} · {date} ", flush=True)
+        items = [playerctl(), volume(), battery(), date()]
+        items = [item for item in items if item is not None]
+        print(" · ".join(items) + " ", flush=True)
 
     signal_raised = False
 
@@ -62,8 +74,8 @@ def print_status(disregard_signal=True):
 def main():
     signal.signal(signal.SIGUSR1, handle_usr_signal)
     while True:
-        time.sleep(1)
         print_status()
+        time.sleep(1)
 
 
 if __name__ == "__main__":
