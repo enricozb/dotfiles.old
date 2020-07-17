@@ -106,7 +106,7 @@ bindsym XF86AudioPlay exec --no-startup-id "playerctl play-pause && killall -SIG
 
 # ----- style -----
 # background
-  exec --no-startup-id "feh --bg-scale '/home/enricozb/.wallpapers/e5.1/Carmine De Fazio.jpg'"
+  exec --no-startup-id "feh --bg-scale '/home/enricozb/.config/wallpapers/Carmine De Fazio.jpg'"
   # output * bg "/home/enricozb/.wallpapers/e5.1/Carmine De Fazio.jpg" fill
 
 # compositor
@@ -131,7 +131,7 @@ bar {
 
   strip_workspace_numbers true
 
-  height 22
+  height 33
 
   colors {
     statusline #ffffff

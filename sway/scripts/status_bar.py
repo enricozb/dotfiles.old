@@ -56,9 +56,13 @@ def date():
 
 
 def battery():
+    status = cmd(["cat", "/sys/class/power_supply/BAT0/status"])
     now = cmd(["cat", "/sys/class/power_supply/BAT0/charge_now"])
     full = cmd(["cat", "/sys/class/power_supply/BAT0/charge_full"])
-    return f"{100 * int(now) / int(full):0.1f}%"
+    if status == "Charging":
+        return f"{100 * int(now) / int(full):0.1f}% [chrg]"
+    else:
+        return f"{100 * int(now) / int(full):0.1f}%"
 
 
 def print_status(disregard_signal=True):
