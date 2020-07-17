@@ -135,8 +135,8 @@ function open
 end
 
 
-function man  -w man -d "man with kak as the pager"
-  command man $argv[1] | col -b -x | kak -e "set buffer filetype man"
+function man -w man -d "man with kak as the pager"
+  command kak -e "man $argv[1]"
 end
 
 
