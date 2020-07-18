@@ -140,6 +140,11 @@ function man -w man -d "man with kak as the pager"
 end
 
 
+function ezb -d "ssh into main ezb machine"
+  command ssh me.ezb.io -p 1749
+end
+
+
 # ----------------------- bindings -----------------------
 bind \ep projects
 bind \ew wiki-open
