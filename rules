@@ -9,3 +9,4 @@ xinit/.xinitrc ; /home/enricozb/.xinitrc
 rofi ; /home/enricozb/.config/rofi/
 kak/kakrc ; /home/enricozb/.config/kak/kakrc
 kak/rc ; /home/enricozb/.config/kak/rc
+flameshot/flameshot.ini ; /home/enricozb/.config/Dharkael/flameshot.ini
