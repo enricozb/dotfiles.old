@@ -7,3 +7,5 @@ swaylock ; /home/enricozb/.config/swaylock/
 i3 ; /home/enricozb/.config/i3/
 xinit/.xinitrc ; /home/enricozb/.xinitrc
 rofi ; /home/enricozb/.config/rofi/
+kak/kakrc ; /home/enricozb/.config/kak/kakrc
+kak/rc ; /home/enricozb/.config/kak/rc
