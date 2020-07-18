@@ -70,15 +70,8 @@ hook global WinSetOption filetype=typescript %{
 }
 
 hook global WinSetOption filetype=man %{
-  remove-hooks window man-hooks
-
   remove-highlighter global/col-89
   map buffer normal q :q<ret>
-
-  # has to be hooked otherwise kakoune won't let the pipe write data to the buffer
-  hook buffer BufCloseFifo .* %{
-    set-option buffer readonly true
-  }
 }
 
 hook global BufCreate .*(sway)/config.d/[^\.]* %{
