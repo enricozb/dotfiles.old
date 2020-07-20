@@ -2,7 +2,7 @@
   color: #ffffff;
   backlight: #000000;
   background-color: transparent;
-  font: "Terminus (TTF) 20";
+  font: "ROFI_FONT";
 }
 
 #window {
