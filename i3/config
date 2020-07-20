@@ -10,7 +10,7 @@
 
 # ----- sway enter/exit -----
 # reload config
-  bindsym $mod+Shift+r reload
+  bindsym $mod+Shift+r restart
 
 # lock screen
   # bindsym Mod4+l exec swaylock -C ~/.config/swaylock/config
@@ -81,11 +81,18 @@ bindsym $mod+r mode "resize"
 
 # ----- media keys -----
 bindsym XF86AudioMute exec --no-startup-id "pamixer --toggle-mute toggle && killall -SIGUSR1 status_bar.py"
-bindsym XF86AudioRaiseVolume exec --no-startup-id "pamixer --increase 5 && killall -SIGUSR1 status_bar.py"
+bindsym F8 exec --no-startup-id "pamixer --toggle-mute toggle && killall -SIGUSR1 status_bar.py"
+
 bindsym XF86AudioLowerVolume exec --no-startup-id "pamixer --decrease 5 && killall -SIGUSR1 status_bar.py"
+bindsym F9 exec --no-startup-id "pamixer --decrease 5 && killall -SIGUSR1 status_bar.py"
+
+bindsym XF86AudioRaiseVolume exec --no-startup-id "pamixer --increase 5 && killall -SIGUSR1 status_bar.py"
+bindsym F10 exec --no-startup-id "pamixer --increase 5 && killall -SIGUSR1 status_bar.py"
+
 bindsym XF86AudioPrev exec --no-startup-id "playerctl previous && killall -SIGUSR1 status_bar.py"
 bindsym XF86AudioNext exec --no-startup-id "playerctl next && killall -SIGUSR1 status_bar.py"
 bindsym XF86AudioPlay exec --no-startup-id "playerctl play-pause && killall -SIGUSR1 status_bar.py"
+bindsym F7 exec --no-startup-id "playerctl play-pause && killall -SIGUSR1 status_bar.py"
 
 
 # ----- programs -----
@@ -103,6 +110,7 @@ bindsym XF86AudioPlay exec --no-startup-id "playerctl play-pause && killall -SIG
 
 # screenshot
   bindsym End exec --no-startup-id "flameshot gui"
+  bindsym F3 exec --no-startup-id "flameshot gui"
 
 # ----- style -----
 # background
