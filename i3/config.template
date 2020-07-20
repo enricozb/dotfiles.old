@@ -135,11 +135,11 @@ bar {
 
   i3bar_command i3bar -t
   position top
-  font pango:Terminus (TTF)
+  font pango:BAR_FONT
 
   strip_workspace_numbers true
 
-  height 33
+  height BAR_HEIGHT
 
   colors {
     statusline #ffffff

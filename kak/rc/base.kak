@@ -78,6 +78,10 @@ hook global BufCreate .*(sway)/config.d/[^\.]* %{
   set buffer filetype i3
 }
 
+hook global BufCreate .*i3/config.template %{
+  set buffer filetype i3
+}
+
 
 # ----------------------------------- plugin options -----------------------------------
 # fzf
