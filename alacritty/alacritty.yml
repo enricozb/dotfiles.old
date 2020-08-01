@@ -1,10 +1,10 @@
 font:
   normal:
-    family: Terminus (TTF)
+    family: Terminus
     style: Medium
 
   bold:
-    family: Terminus (TTF)
+    family: Terminus
     style: Bold
 
   size: 10.0

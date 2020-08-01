@@ -3,15 +3,14 @@
 import signal
 import time
 
-from subprocess import check_output, CalledProcessError
+from subprocess import run, CalledProcessError, PIPE
 from threading import Lock
 
 
-def cmd(cmd, shell=False):
-    try:
-        return check_output(cmd, shell=shell, encoding="utf-8").strip()
-    except:
-        return None
+def cmd(cmd, shell=False, none_on_err=True):
+    proc = run(cmd, shell=shell, stdout=PIPE, stderr=PIPE, encoding="utf-8")
+    if not none_on_err or proc.returncode == 0:
+        return proc.stdout.strip()
 
 
 def handle_usr_signal(signum, frame):
@@ -20,7 +19,7 @@ def handle_usr_signal(signum, frame):
 
 
 def volume():
-    return cmd(["pamixer", "--get-volume-human"])
+    return cmd(["pamixer", "--get-volume-human"], none_on_err=False)
 
 
 def playerctl():

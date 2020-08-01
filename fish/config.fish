@@ -56,7 +56,7 @@ function wiki-open --description "wiki filenames fzf"
   set -l file ~/wiki/(find -L ~/wiki \
                ! -path "*/node_modules/*" \
                ! -path "*/_target/*" \
-               -iname "*.md" -printf "%P\n" | fzf)
+               -regex ".*\.\(md\|yuml\)" -printf "%P\n" | fzf)
   if [ -n "$file" ]
     kak $file
   end
@@ -129,6 +129,8 @@ function open
       mpv --really-quiet $argv & disown
     case 'inode/directory'
       cd $argv
+    case 'image/*'
+      sxiv $argv
     case '*'
       xdg-open $argv
   end
