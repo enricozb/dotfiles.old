@@ -22,11 +22,12 @@ set -x PATH "$HOME/.poetry/bin" $PATH       # poetry python
 set -x PATH "/opt/bin/" $PATH               # manual installs
 
 # ------------------------ aliases -----------------------
-alias o="open"
-alias l="ls"
-alias cp="cp -p"
-alias wiki="kak ~/wiki/index.md"
-alias gg="lazygit"
+alias o "open"
+alias l "ls"
+alias cp "cp -p"
+alias wiki "kak ~/wiki/index.md"
+alias gg "lazygit"
+alias tree "tree -C"
 
 # ----------------------- functions ----------------------
 function work --description "default tmux session"
@@ -87,7 +88,12 @@ end
 
 
 function projects --description "cd into a project with fzf"
-  set -l proj (find ~/wiki/activities/projects -type d -not -path '*/\.*' | fzf)
+  set -l proj ~/wiki/activities/projects/(find ~/wiki/activities/projects \
+      -type d \
+      -not -path '*/\.*' \
+      -printf "%P\n" \
+    | fzf)
+
   if [ -n "$proj" ]
     cd $proj
     commandline -f repaint
@@ -123,14 +129,14 @@ function open
   switch (file -b --mime-type $argv[1])
     case 'application/pdf'
       zathura $argv & disown
-    case 'text/*' 'inode/x-empty' 'application/octet-stream'
+    case 'text/*' 'inode/x-empty' 'application/octet-stream' 'application/json'
       kak $argv
     case 'video/*'
       mpv --really-quiet $argv & disown
     case 'inode/directory'
       cd $argv
     case 'image/*'
-      sxiv $argv
+      sxiv $argv & disown
     case '*'
       xdg-open $argv
   end

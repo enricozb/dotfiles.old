@@ -13,7 +13,7 @@ add-highlighter global/numbers number-lines
 add-highlighter global/trailing-whitespace regex ([^\S\n]+)\n 1:red,bright-red
 add-highlighter global/todo-fixme regex \b(TODO|FIXME|XXX|NOTE)\b 0:default+r
 add-highlighter global/col-89 column 89 default,rgb:252525
-colorscheme palenight
+colorscheme palernight
 
 
 # --------------------------------------- remaps ---------------------------------------
@@ -90,3 +90,11 @@ set-option global fzf_use_main_selection false
 set-option global fzf_highlight_command bat
 set-option global fzf_file_command \
   "find . \( -path '*/.svn*' -o -path '*/.git/*' \) -prune -o -type f -print"
+set-option global fzf_default_opts "%sh{echo ""$FZF_DEFAULT_OPTS""}"
+
+# smooth-scroll
+set-option global scroll_keys_normal <c-f> <c-b> <c-d> <c-u> <pageup> <pagedown> ( ) m M <a-semicolon> n <a-n> N <a-N>
+
+hook global WinCreate .* %{
+  hook -once window WinDisplay .* smooth-scroll-enable
+}
