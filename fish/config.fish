@@ -132,7 +132,7 @@ function open
     case 'text/*' 'inode/x-empty' 'application/octet-stream' 'application/json'
       kak $argv
     case 'video/*'
-      mpv --really-quiet $argv & disown
+      mpv $argv
     case 'inode/directory'
       cd $argv
     case 'image/*'
@@ -152,6 +152,12 @@ function ezb -d "ssh into main ezb machine"
   command ssh me.ezb.io -p 1749
 end
 
+
+function mpv -w mpv -d "mpv with mpris"
+  command mpv \
+    --script=/home/enricozb/.config/mpv/scripts/mpris.so \
+    --really-quiet $argv > /dev/null 2>&1 & disown
+end
 
 # ----------------------- bindings -----------------------
 bind \ep projects
