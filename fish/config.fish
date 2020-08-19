@@ -26,6 +26,7 @@ alias o "open"
 alias l "ls"
 alias cp "cp -p"
 alias wiki "kak ~/wiki/index.md"
+alias wg "wikigrep"
 alias gg "lazygit"
 alias tree "tree -C"
 
@@ -35,33 +36,34 @@ function work --description "default tmux session"
 end
 
 
-function wikifind --description "find wiki files with content"
-  switch "$argv"
-  case '-w *'
-    find -L ~/wiki \
-      ! -path "*/node_modules/*" \
-      ! -path "*/_target/*" \
-      -iname "*.md" \
-    | xargs -d '\n' grep --color -ine (echo -n "$argv" | sed -n "s/-w\s*//p")
-  case '*'
-    find -L ~/wiki \
-      ! -path "*/node_modules/*" \
-      ! -path "*/_target/*" \
-      -iname "*.md" \
-    | xargs -d '\n' grep --color -wine $argv
-  end
+function wikigrep --description "grep wiki files for content"
+  command rg -i -t md -t yaml \
+    -g "!*/node_modules/*" \
+    -g "!*/_target/*" \
+    $argv ~/wiki
 end
 
 
-function wiki-open --description "wiki filenames fzf"
-  set -l file ~/wiki/(find -L ~/wiki \
+function wiki_find --description "find wiki filename with fzf"
+  echo ~/wiki/(find -L ~/wiki \
                ! -path "*/node_modules/*" \
                ! -path "*/_target/*" \
                -regex ".*\.\(md\|yuml\)" -printf "%P\n" | fzf)
+end
+
+
+function wiki_open --description "find wiki filename with fzf"
+  set -l file (wiki_find)
   if [ -n "$file" ]
-    kak $file
+    command kak (wiki_find)
   end
   commandline -f repaint
+end
+
+
+function wiki_insert --description "find wiki filename with fzf"
+  commandline -it -- (wiki_find)
+  commandline -it -- " "
 end
 
 
@@ -87,12 +89,17 @@ function config --description "access configs"
 end
 
 
-function projects --description "cd into a project with fzf"
-  set -l proj ~/wiki/activities/projects/(find ~/wiki/activities/projects \
+function project_find --description "find a project dir with fzf"
+  echo ~/wiki/activities/projects/(find ~/wiki/activities/projects \
       -type d \
       -not -path '*/\.*' \
       -printf "%P\n" \
     | fzf)
+end
+
+
+function project_open --description "cd into a project with fzf"
+  set -l proj (project_find)
 
   if [ -n "$proj" ]
     cd $proj
@@ -106,6 +113,12 @@ function projects --description "cd into a project with fzf"
       source (poetry env list --full-path | awk '{ print $1 }')/bin/activate.fish
     end
   end
+end
+
+
+function project_insert --description "insert a project dir into the commandline"
+  commandline -it -- (project_find)
+  commandline -it -- " "
 end
 
 
@@ -144,7 +157,7 @@ end
 
 
 function man -w man -d "man with kak as the pager"
-  command kak -e "man $argv[1]"
+  command kak -e "man $argv"
 end
 
 
@@ -160,12 +173,16 @@ function mpv -w mpv -d "mpv with mpris"
 end
 
 # ----------------------- bindings -----------------------
-bind \ep projects
-bind \ew wiki-open
+bind \ep project_open
+bind \eP project_insert
+bind \ew wiki_open
+bind \eW wiki_insert
+bind \eo __fzf_open
+bind \eO __fzf_open_insert
+
 bind \cw forward-word
 bind \cb backward-kill-word
 bind \cs __fish_prepend_sudo
-bind \eo __fzf_open
 bind \eC config
 
 

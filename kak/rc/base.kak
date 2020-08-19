@@ -2,6 +2,7 @@
 set-option global autoreload true
 set-option global scrolloff 3,0
 set-option global ui_options ncurses_enable_mouse=false
+set-option global ui_options ncurses_assistant=none
 
 hook global InsertChar \t %{ exec -draft -itersel h@ }
 set-option global tabstop 2
@@ -18,7 +19,8 @@ colorscheme palernight
 
 # --------------------------------------- remaps ---------------------------------------
 # convenience
-map -docstring 'case insensitive search' global normal '/' /(?i)\Q
+map -docstring 'case insensitive exact search' global normal / /(?i)\Q
+map -docstring 'search' global normal ? /
 map global normal <backspace> ': q<ret>'
 map global normal  ': comment-line<ret>' # <c-/> or <c-_>, the unit separator
 map global normal D <a-x>d
@@ -93,7 +95,8 @@ set-option global fzf_file_command \
 set-option global fzf_default_opts "%sh{echo ""$FZF_DEFAULT_OPTS""}"
 
 # smooth-scroll
-set-option global scroll_keys_normal <c-f> <c-b> <pageup> <pagedown> m M <a-semicolon> n <a-n> N <a-N>
+set-option global scroll_keys_normal \
+  <c-f> <c-b> <pageup> <pagedown> m M <a-semicolon> n <a-n> N <a-N>
 
 hook global WinCreate .* %{
   hook -once window WinDisplay .* smooth-scroll-enable
