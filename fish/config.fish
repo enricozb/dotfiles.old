@@ -55,7 +55,7 @@ end
 function wiki_open --description "find wiki filename with fzf"
   set -l file (wiki_find)
   if [ -n "$file" ]
-    command kak (wiki_find)
+    command kak $file
   end
   commandline -f repaint
 end
@@ -139,7 +139,7 @@ end
 
 
 function open
-  switch (file -b --mime-type $argv[1])
+  switch (file -L -b --mime-type $argv[1])
     case 'application/pdf'
       zathura $argv & disown
     case 'text/*' 'inode/x-empty' 'application/octet-stream' 'application/json'

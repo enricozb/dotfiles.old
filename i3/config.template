@@ -97,7 +97,7 @@ bindsym F7 exec --no-startup-id "playerctl play-pause && killall -SIGUSR1 status
 
 # ----- programs -----
 # terminal
-  bindsym $mod+Return exec --no-startup-id 'alacritty'
+  bindsym $mod+Return exec --no-startup-id "alacritty -e /usr/bin/fish"
 
 # launcher
 # Note: pass the final command to swaymsg so that the resulting window
